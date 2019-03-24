@@ -7,7 +7,7 @@ unnest:{[parser;tree]                              / nested data structure into 
   e:{@\:[x y;y]} parser;                           / eval node (leaf or branch) into (d;n;v)i using supplied parser
   lvl:{x each raze y[;0]} e;                       / evaluate every descendant at current level
   r:raze lvl\[enlist e tree];                      / flattened scan of all the levels of the tree
-  ([]p:0N,where count each r[;0];                  / parent vector: think 0 0 0 1 3 3 3 3~where 3 2 0 4
+  ([]p:0N,where count each r[;0];                  / parent vector: think 0 0 0 1 1 3 3 3 3~where 3 2 0 4
      n:$[neg abs type n;" "],n:raze r[;1];         / names of nodes (branches or leaves); root name is typed " "
      v:r[;2])}                                     / values stored in nodes
 
@@ -15,7 +15,7 @@ path:{1_reverse x scan y};                         / path from root to y travers
 
 nest:{[tree]                                       / nested structure from table representing tree hierarchy
   p:1_'tree[`n] path[tree`p] each til count tree;  / paths except first (root)
-  .[;;:;]/[ first tree`v ; p ; tree`v ]}           /
+  .[;;:;]/[ first tree`v ; p ; tree`v ]}           / apply values over paths, starting from the root
 
 \d .pars                                           / predefined parsers; input is a tree node; output a list of functions
 emptyDir:{![1#0#key x;enlist(::)]};                / empty namespace with keys of same type as key x and any (::) values
